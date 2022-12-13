@@ -34,17 +34,19 @@ export function createStarkTree(): Person {
         log the name property of currentPerson
         push each element of currentPerson's children onto the workStack*/
 
-function logAllPeopleInTree(rootPerson: Person): void {
+function logAllPeopleInTree(rootPerson: Person): string[] {
     let workStack = [];
+    let familyTree = []
     workStack.push(rootPerson)
     while(workStack.length !== 0) {
-        let currentPerson: Person = workStack[0]
-        console.log(currentPerson.name)
+        let currentPerson: Person = workStack[workStack.length - 1]
+        familyTree.push(currentPerson.name)
         for(let child of currentPerson.children) {
-            workStack.push(child)
+            workStack.unshift(child)
         }
-        workStack.shift()
+        workStack.pop()
     }
+    return familyTree
 }
 
-logAllPeopleInTree(createStarkTree())
+console.log(logAllPeopleInTree(createStarkTree()), "Num in Fam: ", logAllPeopleInTree(createStarkTree()).length)
